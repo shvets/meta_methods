@@ -4,6 +4,7 @@ $LOAD_PATH.unshift File.expand_path("lib", File.dirname(__FILE__))
 
 require "rspec/core/rake_task"
 require "meta_methods/version"
+require "gemspec_deps_gen/gemspec_deps_gen"
 
 def version
   MetaMethods::VERSION

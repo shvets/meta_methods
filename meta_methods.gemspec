@@ -18,7 +18,8 @@ Gem::Specification.new do |spec|
   spec.version       = MetaMethods::VERSION
   #gemspec.requirements = ["none"]
 
-  spec.add_runtime_dependency "rake", [">= 0"]
+  spec.add_development_dependency "gemspec_deps_gen", [">= 0"]
+  spec.add_development_dependency "gemcutter", [">= 0"]
   
 end
 
