@@ -1,31 +1,33 @@
 #!/usr/bin/env rake
 
-require "bundler/gem_tasks"
+$LOAD_PATH.unshift File.expand_path("lib", File.dirname(__FILE__))
 
-require File.expand_path(File.dirname(__FILE__) + '/lib/meta_methods/version')
+require "rspec/core/rake_task"
+require "meta_methods/version"
 
-require 'rspec/core/rake_task'
+def version
+  MetaMethods::VERSION
+end
+
+def project_name
+  File.basename(Dir.pwd)
+end
+
+task :build do
+  generator = GemspecDepsGen.new
+
+  generator.generate_dependencies "#{project_name}.gemspec.erb", "#{project_name}.gemspec"
+
+  system "gem build #{project_name}.gemspec"
+end
+
+task :release => :build do
+  system "gem push #{project_name}-#{version}.gem"
+end
 
 RSpec::Core::RakeTask.new do |task|
   task.pattern = 'spec/**/*_spec.rb'
   task.verbose = false
 end
 
-desc "Release the gem"
-task :"release:gem" do
-  %x(
-rake build
-rake install
-git add .
-)
-  puts "Commit message:"
-  message = STDIN.gets
-
-  %x(
-git commit -m "#{message}"
-git push origin master
-
-gem push pkg/#{File.basename(Dir.pwd)}-#{MetaMethods::VERSION}.gem
-)
-end
 
