@@ -38,6 +38,14 @@ module MetaMethods
 
     begin
       object = create_block.kind_of?(Proc) ? create_block.call : create_block
+      object.instance_variable_set(:@execute_block, execute_block)
+
+      def object.method_missing(sym, *args, &block)
+        block_binding = @execute_block.binding
+        caller = block_binding.eval 'self'
+
+        caller.send sym, *args, &block
+      end
 
       object.instance_eval(&execute_block)
     ensure
