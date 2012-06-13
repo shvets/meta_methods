@@ -17,7 +17,7 @@ module MetaMethods
 
       object.instance_variable_set("@#{key}".to_sym, value)
     else
-      object.class_eval <<-CODE
+      object.class.class_eval <<-CODE
         def #{key}
           "#{value}"
         end

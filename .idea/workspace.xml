@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb96d5fa-a536-45ee-8377-2c11e1c06313" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/meta_methods/meta_methods.rb" afterPath="$PROJECT_DIR$/lib/meta_methods/meta_methods.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/meta_methods/version.rb" afterPath="$PROJECT_DIR$/lib/meta_methods/version.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/meta_methods.gemspec" afterPath="$PROJECT_DIR$/meta_methods.gemspec" />
     </list>
     <ignored path="meta_methods.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -54,16 +57,16 @@
       <file leaf-file-name="meta_methods.gemspec.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/meta_methods.gemspec.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="8" selection-start="548" selection-end="548" vertical-scroll-proportion="-8.32">
+            <state line="13" column="8" selection-start="548" selection-end="548" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="meta_methods.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/meta_methods/meta_methods.rb">
+      <file leaf-file-name="version.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/meta_methods/version.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="16" selection-start="869" selection-end="869" vertical-scroll-proportion="0.0">
+            <state line="1" column="18" selection-start="37" selection-end="37" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -78,10 +81,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="version.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/meta_methods/version.rb">
+      <file leaf-file-name="meta_methods.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/meta_methods/meta_methods.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="18" selection-start="37" selection-end="37" vertical-scroll-proportion="0.025931928">
+            <state line="23" column="27" selection-start="616" selection-end="616" vertical-scroll-proportion="0.59643435">
               <folding />
             </state>
           </provider>
@@ -109,8 +112,8 @@
         <option value="$PROJECT_DIR$/Rakefile" />
         <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/meta_methods.gemspec.erb" />
-        <option value="$PROJECT_DIR$/lib/meta_methods/meta_methods.rb" />
         <option value="$PROJECT_DIR$/lib/meta_methods/version.rb" />
+        <option value="$PROJECT_DIR$/lib/meta_methods/meta_methods.rb" />
       </list>
     </option>
   </component>
@@ -146,6 +149,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -198,7 +202,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="RunManager">
@@ -431,21 +434,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/meta_methods.gemspec.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="8" selection-start="548" selection-end="548" vertical-scroll-proportion="-8.32">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/meta_methods/meta_methods.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="16" selection-start="869" selection-end="869" vertical-scroll-proportion="0.0">
+        <state line="13" column="8" selection-start="548" selection-end="548" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/meta_methods/version.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="18" selection-start="37" selection-end="37" vertical-scroll-proportion="0.025931928">
+        <state line="1" column="18" selection-start="37" selection-end="37" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/meta_methods/meta_methods.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="27" selection-start="616" selection-end="616" vertical-scroll-proportion="0.59643435">
           <folding />
         </state>
       </provider>
