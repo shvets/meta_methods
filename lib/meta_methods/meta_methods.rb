@@ -33,13 +33,19 @@ module MetaMethods
     extract_values(defined_vars(scope), scope)
   end
 
-  def evaluate_dsl(create_block, destroy_block, execute_block, access_block_scope=true)
+  def evaluate_dsl(create_block, destroy_block, execute_block)
     object = nil
 
     begin
       object = create_block.kind_of?(Proc) ? create_block.call : create_block
+      object.instance_variable_set(:@execute_block, execute_block)
 
-      access_block_scope(object, @execute_block) if access_block_scope
+      def object.method_missing(sym, *args, &block)
+        block_binding = @execute_block.binding
+        caller = block_binding.eval 'self'
+
+        caller.send sym, *args, &block
+      end
 
       object.instance_eval(&execute_block)
     ensure
@@ -48,18 +54,6 @@ module MetaMethods
   end
 
   private
-
-  def access_block_scope object, block
-    object.instance_variable_set(:@execute_block, block)
-
-    def object.method_missing(sym, *args, &block)
-      block_binding = @execute_block.binding
-
-      caller = block_binding.eval 'self'
-
-      caller.send sym, *args, &block
-    end
-  end
 
   def defined_vars scope
     eval("local_variables", scope) - Kernel.local_variables - %w(content)
