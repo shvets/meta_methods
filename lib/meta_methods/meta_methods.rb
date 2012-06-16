@@ -5,19 +5,19 @@ module MetaMethods
     end
   end
 
-  def define_attributes(type, object, hash, create_instance_variable=true)
+  def define_attributes(type, object, hash, create_instance=true)
     hash.each_pair do |key, value|
-      define_attribute(type, object, key, value, create_instance_variable)
+      define_attribute(type, object, key, value, create_instance)
     end
   end
 
-  def define_attribute(type, object, key, value, create_instance_variable=true)
-    if create_instance_variable
+  def define_attribute(type, object, key, value, create_instance=true)
+    if create_instance
       metaclass(object).send type, key.to_sym
 
       object.instance_variable_set("@#{key}".to_sym, value)
     else
-      object.class.class_eval <<-CODE
+      metaclass(object).class_eval <<-CODE
         def #{key}
           "#{value}"
         end
@@ -33,19 +33,13 @@ module MetaMethods
     extract_values(defined_vars(scope), scope)
   end
 
-  def evaluate_dsl(create_block, destroy_block, execute_block)
+  def evaluate_dsl(create_block, destroy_block, execute_block, access_block_scope=true)
     object = nil
 
     begin
       object = create_block.kind_of?(Proc) ? create_block.call : create_block
-      object.instance_variable_set(:@execute_block, execute_block)
 
-      def object.method_missing(sym, *args, &block)
-        block_binding = @execute_block.binding
-        caller = block_binding.eval 'self'
-
-        caller.send sym, *args, &block
-      end
+      access_block_scope(object, @execute_block) if access_block_scope
 
       object.instance_eval(&execute_block)
     ensure
@@ -55,8 +49,20 @@ module MetaMethods
 
   private
 
+  def access_block_scope object, block
+    object.instance_variable_set(:@execute_block, block)
+
+    def object.method_missing(sym, *args, &block)
+      block_binding = @execute_block.binding
+
+      caller = block_binding.eval 'self'
+
+      caller.send sym, *args, &block
+    end
+  end
+
   def defined_vars scope
-    eval("local_variables", scope) - Kernel.local_variables - ["content"]
+    eval("local_variables", scope) - Kernel.local_variables - %w(content)
   end
 
   def extract_values vars_list, scope
