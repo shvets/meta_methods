@@ -16,7 +16,11 @@ Or install it yourself as:
 
 ## Usage
 
+```ruby
+require 'meta_methods'
+
 class MyNewClass
+
   include MetaMethods
 
   def test
@@ -24,6 +28,7 @@ class MyNewClass
   end
 
 end
+```
 
 ## Contributing
 
