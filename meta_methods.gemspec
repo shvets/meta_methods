@@ -15,8 +15,9 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.version       = MetaMethods::VERSION
 
+  
   spec.add_development_dependency "gemspec_deps_gen", [">= 0"]
   spec.add_development_dependency "gemcutter", [">= 0"]
-  
+
 end
 

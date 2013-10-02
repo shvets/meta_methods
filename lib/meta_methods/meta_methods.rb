@@ -34,23 +34,30 @@ module MetaMethods
   end
 
   def evaluate_dsl(create_block, destroy_block, execute_block)
-    object = nil
 
     begin
-      object = create_block.kind_of?(Proc) ? create_block.call : create_block
-      object.instance_variable_set(:@execute_block, execute_block)
+      created_object = create_block.kind_of?(Proc) ? create_block.call : create_block
 
-      def object.method_missing(sym, *args, &block)
-        block_binding = @execute_block.binding
-        caller = block_binding.eval 'self'
+      created_object.instance_variable_set(:@parent, block_parent(execute_block))
 
-        caller.send sym, *args, &block
+      def created_object.method_missing(sym, *args, &block)
+        @parent.send sym, *args, &block
       end
 
-      object.instance_eval(&execute_block)
+      def created_object.respond_to?(sym, include_private = false)
+        @parent.respond_to? sym, include_private
+      end
+
+      created_object.instance_eval(&execute_block)
     ensure
-      destroy_block.call(object) if destroy_block && object
+      destroy_block.call(created_object) if destroy_block && created_object
     end
+  end
+
+  def block_parent block
+    block_binding = block.binding
+
+    block_binding.eval 'self'
   end
 
   private

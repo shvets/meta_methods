@@ -1,3 +1,3 @@
-module MetaMethods
-  VERSION = "1.0.5"
+class MetaMethods
+  VERSION = "1.0.6"
 end
