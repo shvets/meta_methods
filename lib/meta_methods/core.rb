@@ -1,27 +1,40 @@
-module MetaMethods
+module MetaMethods::Core
   def metaclass object
-    class << object
-      self
-    end
+    # class << object
+    #   self
+    # end
+    object.singleton_class
   end
 
-  def define_attributes(type, object, hash, create_instance=true)
+  # def define_attributes(type, object, hash, create_instance=true)
+  #   hash.each_pair do |key, value|
+  #     define_attribute(type, object, key, value, create_instance)
+  #   end
+  # end
+  #
+  # def define_attribute(type, object, key, value, create_instance=true)
+  #   if create_instance
+  #     metaclass(object).send type, key.to_sym
+  #
+  #     object.instance_variable_set("@#{key}".to_sym, value)
+  #   else
+  #     metaclass(object).class_eval <<-CODE
+  #       def #{key}
+  #         "#{value}"
+  #       end
+  #     CODE
+  #   end
+  # end
+
+  def define_attribute(object, key, value)
+    object.singleton_class.send :attr_accessor, key.to_sym # creates accessor
+
+    object.send "#{key}=".to_sym, value  # sets up value for attribute
+  end
+
+  def define_attributes(object, hash)
     hash.each_pair do |key, value|
-      define_attribute(type, object, key, value, create_instance)
-    end
-  end
-
-  def define_attribute(type, object, key, value, create_instance=true)
-    if create_instance
-      metaclass(object).send type, key.to_sym
-
-      object.instance_variable_set("@#{key}".to_sym, value)
-    else
-      metaclass(object).class_eval <<-CODE
-        def #{key}
-          "#{value}"
-        end
-      CODE
+      define_attribute(object, key, value)
     end
   end
 
