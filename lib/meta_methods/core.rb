@@ -16,22 +16,33 @@ module MetaMethods
       end
     end
 
-    def locals_to_hash object, content
-      scope = object.instance_eval { binding }
+    def block_to_hash content
+      object = Object.new
+      scope = object.send :binding
 
-      eval(content, scope)
+      object.send(:eval, content, scope)
 
-      extract_values(defined_vars(scope), scope)
+      vars_list = defined_vars(object, scope) - [:content, :vars_list]
+
+      extract_values(vars_list, object, scope)
     end
 
     private
 
-    def defined_vars scope
-      eval("local_variables", scope) - Kernel.local_variables - %w(content)
+    def defined_vars object, scope
+      object.send(:eval, "local_variables", scope) - Kernel.local_variables
     end
 
-    def extract_values vars_list, scope
-      vars_values_list = vars_list.collect { |name| [name, get_property(name, scope)] }
+    def extract_values vars_list, object, scope
+      vars_values_list = vars_list.collect do |name|
+        value = begin
+          get_property(object, name, scope)
+        rescue NameError
+          nil
+        end
+
+        [name, value]
+      end
 
       hash = {}
       vars_values_list.each do |var, value|
@@ -41,12 +52,8 @@ module MetaMethods
       hash
     end
 
-    def get_property name, scope
-      begin
-        eval(name.to_s, scope)
-      rescue NameError
-        nil
-      end
+    def get_property object, name, scope
+      object.send :eval, name.to_s, scope
     end
   end
 end

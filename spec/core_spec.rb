@@ -26,11 +26,11 @@ describe MetaMethods::Core do
     end
   end
 
-  describe "#locals_to_hash" do
+  describe "#block_to_hash" do
     it "should evaluate content" do
-      s = "a=1; b=2"
+      content = "a=1; b=2"
 
-      hash = subject.locals_to_hash subject, s
+      hash = subject.block_to_hash content
 
       expect(hash[:a]).to eq 1
       expect(hash[:b]).to eq 2

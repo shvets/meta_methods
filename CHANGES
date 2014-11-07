@@ -21,3 +21,7 @@
 
 * Adding Dsl Builder.
 * Api changes.
+
+== Version 1.3.0
+
+* Change locals_to_hash to block_to_hash.
