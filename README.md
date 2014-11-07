@@ -16,17 +16,69 @@ Or install it yourself as:
 
 ## Usage
 
+Define new attribute:
+
 ```ruby
-require 'meta_methods'
+require 'meta_methods/core'
 
-class MyNewClass
+object = Object.new
 
-  include MetaMethods
+MetaMethods::Core.instance.define_attribute object, :new_attribute, "new_attribute_value"
+```
 
-  def test
-    puts metaclass
-  end
+or list of attributes:
 
+
+```ruby
+object = Object.new
+
+MetaMethods::Core.instance.define_attributes object, {new_attribute1: "new_attribute_value1",
+                                                      new_attribute2: "new_attribute_value2" })
+```
+
+Convert ruby fragment into hash:
+
+```
+content = "a=1; b=2"
+
+hash = MetaMethods::Core.instance.block_to_hash content
+```
+
+Build simplified DSL:
+
+```ruby
+def created
+  puts "created"
+end
+
+def destroyed object
+  puts "destroyed: #{object}"
+end
+
+def executed object
+  puts "executed: #{object}"
+end
+
+create_block = lambda { created }
+destroy_block = lambda {|object| p destroyed(object) }
+execute_block = lambda {|object| p executed(object) }
+
+def build(&block)
+  MetaMethods::DslBuilder.instance.evaluate_dsl(create_block, destroy_block, execute_block)
+end
+
+def file params
+  p "file: #{params}"
+end
+
+def directory params
+  p "directory: #{params}"
+end
+
+build do
+  file :name => "Gemfile"
+  file :name => "Rakefile", :to_dir => "my_config"
+  directory :from_dir => "spec"
 end
 ```
 

@@ -17,14 +17,14 @@ describe MetaMethods::DslBuilder do
   private
 
   def created
-    p "created"
+    puts "created"
   end
 
   def destroyed object
-    p "destroyed: #{object}"
+    puts "destroyed: #{object}"
   end
 
   def executed object
-    p "executed: #{object}"
+    puts "executed: #{object}"
   end
 end
